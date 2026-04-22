@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission Blooms — Peony Flower Farm, Traverse City</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #faf9f5;
+    --cream-dark: #f0ede6;
+    --green: #4a9c3a;
+    --green-dark: #2e6b22;
+    --green-deep: #1a4212;
+    --green-light: #d6ecd0;
+    --green-pale: #edf6eb;
+    --charcoal: #141810;
+    --text: #2a2e25;
+    --text-muted: #4a5040;
+    --border: rgba(74,156,58,0.15);
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'Jost', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-sans); background: var(--cream); color: var(--text); font-size: 16px; line-height: 1.7; font-weight: 300; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.6rem 3rem;
+    background: rgba(250,249,245,0.97); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo-img { height: 64px; width: auto; display: block; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.25s; }
+  .nav-links a:hover { color: var(--green-dark); }
+
+  /* BUTTONS */
+  .btn { display: inline-block; font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; padding: 1rem 2.5rem; border: 1px solid var(--green-dark); color: var(--green-dark); transition: all 0.3s; }
+  .btn:hover { background: var(--green-dark); color: var(--cream); }
+  .btn-green { background: var(--green); border-color: var(--green); color: white; }
+  .btn-green:hover { background: var(--green-dark); border-color: var(--green-dark); }
+  .btn-cream { border-color: rgba(255,255,255,0.6); color: white; }
+  .btn-cream:hover { background: white; color: var(--green-deep); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 88px;
+  }
+  .hero-text {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 4rem 3.5rem 4rem 3rem;
+  }
+  .hero-logo { width: 200px; height: auto; margin-bottom: 2rem; }
+  .hero-eyebrow { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 1.25rem; }
+  .hero-title { font-family: var(--font-serif); font-size: clamp(2.8rem, 4.5vw, 5rem); font-weight: 300; line-height: 1.1; color: var(--charcoal); margin-bottom: 1.25rem; }
+  .hero-title em { font-style: italic; color: var(--green); }
+  .hero-sub { font-size: 0.98rem; color: var(--text-muted); max-width: 400px; line-height: 1.85; margin-bottom: 2.5rem; }
+  .hero-visual { position: relative; overflow: hidden; }
+  .hero-visual img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* STATS STRIP */
+  .strip {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .strip-item { padding: 2.5rem 2.5rem; border-right: 1px solid var(--border); }
+  .strip-item:last-child { border-right: none; }
+  .strip-num { font-family: var(--font-serif); font-size: 2.75rem; font-weight: 300; color: var(--green); line-height: 1; margin-bottom: 0.6rem; }
+  .strip-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green-dark); margin-bottom: 0.4rem; }
+  .strip-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+
+  /* DRAWN PEONIES STRIP */
+  .peonies-strip { padding: 5rem 3rem; background: var(--cream); }
+  .peonies-header {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 3rem; gap: 2rem; flex-wrap: wrap;
+  }
+  .peonies-eyebrow { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 0.5rem; }
+  .peonies-title { font-family: var(--font-serif); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 300; color: var(--charcoal); }
+  .peonies-title em { font-style: italic; color: var(--green); }
+  .peonies-row {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem;
+  }
+  .peony-item {
+    text-decoration: none; color: inherit;
+    display: flex; flex-direction: column;
+    border: 1px solid var(--border); background: white;
+    overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .peony-item:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(74,156,58,0.12); }
+  .peony-drawing { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
+  .peony-drawing svg { width: 100%; height: 100%; }
+  .peony-label { font-family: var(--font-serif); font-size: 0.95rem; font-style: italic; padding: 0.75rem 1rem 0.1rem; color: var(--charcoal); }
+  .peony-sub { font-size: 0.68rem; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-muted); padding: 0 1rem 0.85rem; }
+
+  /* ABOUT + PHOTO */
+  .about {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 500px;
+  }
+  .about-photo { position: relative; overflow: hidden; }
+  .about-photo img { width: 100%; height: 100%; object-fit: cover; display: block; min-height: 460px; }
+  .about-photo-badge {
+    position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    background: rgba(250,249,245,0.93); padding: 0.85rem 1.25rem;
+    backdrop-filter: blur(6px); white-space: nowrap;
+  }
+  .about-photo-badge img { width: 140px; height: auto; display: block; }
+  .about-text {
+    padding: 4rem 3.5rem;
+    display: flex; flex-direction: column; justify-content: center;
+    background: var(--cream-dark);
+  }
+  .about-eyebrow { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 1rem; }
+  .about-title { font-family: var(--font-serif); font-size: clamp(1.8rem, 2.8vw, 2.6rem); font-weight: 300; line-height: 1.2; color: var(--charcoal); margin-bottom: 1.25rem; }
+  .about-title em { font-style: italic; color: var(--green); }
+  .about-body { font-size: 0.97rem; color: var(--text-muted); line-height: 1.9; margin-bottom: 2rem; }
+
+  /* DARK CTA FOOTER BAND */
+  .cta-band {
+    background: var(--green-deep); color: white;
+    padding: 4rem 3rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+  }
+  .cta-band-text { font-family: var(--font-serif); font-size: clamp(1.5rem, 2.5vw, 2.4rem); font-weight: 300; line-height: 1.3; }
+  .cta-band-text em { font-style: italic; color: #7dd66a; }
+
+  /* FOOTER */
+  footer { padding: 2rem 3rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .footer-logo img { height: 48px; width: auto; }
+  .footer-copy { font-size: 0.75rem; color: var(--text-muted); }
+  .footer-nav { display: flex; gap: 2rem; list-style: none; }
+  .footer-nav a { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; }
+  .footer-nav a:hover { color: var(--green-dark); }
+
+  @media (max-width: 900px) {
+    nav { padding: 0.6rem 1.5rem; }
+    .nav-logo-img { height: 50px; }
+    .nav-links { gap: 1.5rem; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { min-height: 280px; }
+    .hero-text { padding: 3rem 1.5rem; }
+    .strip { grid-template-columns: 1fr; }
+    .strip-item { border-right: none; border-bottom: 1px solid var(--border); }
+    .peonies-strip { padding: 3rem 1.5rem; }
+    .peonies-row { grid-template-columns: repeat(3, 1fr); }
+    .about { grid-template-columns: 1fr; }
+    .about-photo img { min-height: 300px; }
+    .about-text { padding: 3rem 1.5rem; }
+    .cta-band { flex-direction: column; align-items: flex-start; padding: 3rem 1.5rem; }
+    footer { flex-direction: column; gap: 1.25rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html"><img src="logo.jpg" alt="Mission Blooms" class="nav-logo-img"></a>
+  <ul class="nav-links">
+    <li><a href="shop.html">Varieties</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html">Wholesale</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <img src="logo.jpg" alt="Mission Blooms — Peony Flower Farm" class="hero-logo">
+    <p class="hero-eyebrow">Old Mission Peninsula · Traverse City, Michigan</p>
+    <h1 class="hero-title">Grown with care.<br><em>Cut at peak.</em></h1>
+    <p class="hero-sub">A boutique peony flower farm on Michigan's picturesque Old Mission Peninsula — providing florists with the finest, top-quality blooms.</p>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="shop.html" class="btn btn-green">Explore Varieties</a>
+      <a href="contact.html" class="btn">Wholesale Inquiries</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <img src="photo2.jpeg" alt="Mission Blooms peonies in full bloom">
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="strip">
+  <div class="strip-item">
+    <div class="strip-num">6</div>
+    <div class="strip-label">Peony Varieties</div>
+    <div class="strip-desc">Carefully selected cultivars known for exceptional bloom quality and vase life.</div>
+  </div>
+  <div class="strip-item">
+    <div class="strip-num">OMP</div>
+    <div class="strip-label">Old Mission Peninsula</div>
+    <div class="strip-desc">Northern Michigan's ideal climate — cool nights, long summer days, rich soil.</div>
+  </div>
+  <div class="strip-item">
+    <div class="strip-num">WS</div>
+    <div class="strip-label">Wholesale Only</div>
+    <div class="strip-desc">We partner with florists and buyers who share our passion for exceptional peonies.</div>
+  </div>
+</div>
+
+<!-- DRAWN PEONIES STRIP -->
+<section class="peonies-strip">
+  <div class="peonies-header">
+    <p class="peonies-eyebrow">Our varieties</p>
+    <h2 class="peonies-title">Six <em>exceptional</em> cultivars</h2>
+    <a href="shop.html" class="btn">View all varieties</a>
+  </div>
+  <div class="peonies-row">
+
+    <!-- Jules Elie -->
+    <a href="shop.html#jules-elie" class="peony-item">
+      <div class="peony-drawing" style="background:#fdf4f4;">
+        <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f2b8b8" opacity="0.45" transform="rotate(0 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f2b8b8" opacity="0.45" transform="rotate(36 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f2b8b8" opacity="0.45" transform="rotate(72 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f2b8b8" opacity="0.45" transform="rotate(108 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f2b8b8" opacity="0.45" transform="rotate(144 70 70)"/>
+          <ellipse cx="70" cy="70" rx="36" ry="27" fill="#e8909090" opacity="0.55" transform="rotate(18 70 70)"/>
+          <ellipse cx="70" cy="70" rx="36" ry="27" fill="#e89090" opacity="0.55" transform="rotate(54 70 70)"/>
+          <ellipse cx="70" cy="70" rx="36" ry="27" fill="#e89090" opacity="0.55" transform="rotate(90 70 70)"/>
+          <ellipse cx="70" cy="70" rx="22" ry="16" fill="#d06868" opacity="0.65" transform="rotate(10 70 70)"/>
+          <ellipse cx="70" cy="70" rx="22" ry="16" fill="#d06868" opacity="0.65" transform="rotate(55 70 70)"/>
+          <circle cx="70" cy="70" r="11" fill="#b84848" opacity="0.75"/>
+          <path d="M70 108 Q66 122 62 135" stroke="#8a9e8c" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="60" cy="124" rx="14" ry="5" fill="#7a926e" opacity="0.5" transform="rotate(-25 60 124)"/>
+        </svg>
+      </div>
+      <div class="peony-label">Monsieur Jules Elie</div>
+      <div class="peony-sub">Deep rose pink</div>
+    </a>
+
+    <!-- Duchesse -->
+    <a href="shop.html#duchesse" class="peony-item">
+      <div class="peony-drawing" style="background:#faf7f0;">
+        <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f5edda" opacity="0.65" transform="rotate(0 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f0e5cc" opacity="0.65" transform="rotate(40 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f5edda" opacity="0.65" transform="rotate(80 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#ede0c0" opacity="0.65" transform="rotate(120 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f5edda" opacity="0.65" transform="rotate(160 70 70)"/>
+          <ellipse cx="70" cy="70" rx="36" ry="27" fill="#e8d8b0" opacity="0.75" transform="rotate(20 70 70)"/>
+          <ellipse cx="70" cy="70" rx="36" ry="27" fill="#e8d8b0" opacity="0.75" transform="rotate(60 70 70)"/>
+          <ellipse cx="70" cy="70" rx="22" ry="16" fill="#d4c090" opacity="0.85" transform="rotate(30 70 70)"/>
+          <circle cx="70" cy="70" r="11" fill="#c4a870" opacity="0.9"/>
+          <path d="M70 108 Q74 122 76 135" stroke="#8a9e8c" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="78" cy="123" rx="14" ry="5" fill="#7a926e" opacity="0.5" transform="rotate(20 78 123)"/>
+        </svg>
+      </div>
+      <div class="peony-label">Duchesse de Nemours</div>
+      <div class="peony-sub">Creamy white</div>
+    </a>
+
+    <!-- Sarah Bernhardt -->
+    <a href="shop.html#sarah-bernhardt" class="peony-item">
+      <div class="peony-drawing" style="background:#fdf0f5;">
+        <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f0c8d8" opacity="0.45" transform="rotate(0 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#eebbd0" opacity="0.45" transform="rotate(36 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f0c8d8" opacity="0.45" transform="rotate(72 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#eebbd0" opacity="0.45" transform="rotate(108 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f0c8d8" opacity="0.45" transform="rotate(144 70 70)"/>
+          <ellipse cx="70" cy="70" rx="36" ry="27" fill="#e0a8c0" opacity="0.55" transform="rotate(18 70 70)"/>
+          <ellipse cx="70" cy="70" rx="36" ry="27" fill="#d898b8" opacity="0.55" transform="rotate(54 70 70)"/>
+          <ellipse cx="70" cy="70" rx="22" ry="16" fill="#c07898" opacity="0.68" transform="rotate(15 70 70)"/>
+          <ellipse cx="70" cy="70" rx="22" ry="16" fill="#c07898" opacity="0.68" transform="rotate(60 70 70)"/>
+          <circle cx="70" cy="70" r="11" fill="#a85878" opacity="0.78"/>
+          <path d="M70 108 Q68 122 65 135" stroke="#8a9e8c" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="63" cy="123" rx="14" ry="5" fill="#7a926e" opacity="0.5" transform="rotate(-20 63 123)"/>
+        </svg>
+      </div>
+      <div class="peony-label">Sarah Bernhardt</div>
+      <div class="peony-sub">Apple blossom pink</div>
+    </a>
+
+    <!-- Shirley Temple -->
+    <a href="shop.html#shirley-temple" class="peony-item">
+      <div class="peony-drawing" style="background:#faf8f2;">
+        <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f5ecd8" opacity="0.6" transform="rotate(0 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f0e4c4" opacity="0.6" transform="rotate(45 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f5ecd8" opacity="0.6" transform="rotate(90 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#ede0c0" opacity="0.6" transform="rotate(135 70 70)"/>
+          <ellipse cx="70" cy="70" rx="36" ry="27" fill="#e8d8a8" opacity="0.7" transform="rotate(22 70 70)"/>
+          <ellipse cx="70" cy="70" rx="36" ry="27" fill="#e8d8a8" opacity="0.7" transform="rotate(67 70 70)"/>
+          <ellipse cx="70" cy="70" rx="22" ry="16" fill="#d8c888" opacity="0.8" transform="rotate(10 70 70)"/>
+          <circle cx="70" cy="70" r="11" fill="#c8b070" opacity="0.88"/>
+          <path d="M70 108 Q72 122 74 135" stroke="#8a9e8c" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="76" cy="123" rx="14" ry="5" fill="#7a926e" opacity="0.5" transform="rotate(18 76 123)"/>
+        </svg>
+      </div>
+      <div class="peony-label">Shirley Temple</div>
+      <div class="peony-sub">Blush to ivory</div>
+    </a>
+
+    <!-- Lady Alexandra -->
+    <a href="shop.html#lady-alexandra" class="peony-item">
+      <div class="peony-drawing" style="background:#fdf2f6;">
+        <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f2c8d8" opacity="0.44" transform="rotate(0 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#eebbd0" opacity="0.44" transform="rotate(36 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f2c8d8" opacity="0.44" transform="rotate(72 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#eebbd0" opacity="0.44" transform="rotate(108 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f2c8d8" opacity="0.44" transform="rotate(144 70 70)"/>
+          <ellipse cx="70" cy="70" rx="36" ry="27" fill="#e8a8c0" opacity="0.56" transform="rotate(18 70 70)"/>
+          <ellipse cx="70" cy="70" rx="36" ry="27" fill="#e0a0b8" opacity="0.56" transform="rotate(54 70 70)"/>
+          <ellipse cx="70" cy="70" rx="22" ry="16" fill="#d088a0" opacity="0.68" transform="rotate(15 70 70)"/>
+          <circle cx="70" cy="70" r="11" fill="#b87090" opacity="0.78"/>
+          <path d="M70 108 Q67 122 64 135" stroke="#8a9e8c" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="62" cy="123" rx="14" ry="5" fill="#7a926e" opacity="0.5" transform="rotate(-22 62 123)"/>
+        </svg>
+      </div>
+      <div class="peony-label">Lady Alexandra Duff</div>
+      <div class="peony-sub">Pale blush pink</div>
+    </a>
+
+    <!-- Canary Brilliants -->
+    <a href="shop.html#canary-brilliants" class="peony-item">
+      <div class="peony-drawing" style="background:#fdfbee;">
+        <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f5f0c0" opacity="0.55" transform="rotate(0 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f0e8a0" opacity="0.55" transform="rotate(40 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f5f0c0" opacity="0.55" transform="rotate(80 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#ede080" opacity="0.55" transform="rotate(120 70 70)"/>
+          <ellipse cx="70" cy="70" rx="52" ry="39" fill="#f5f0c0" opacity="0.55" transform="rotate(160 70 70)"/>
+          <ellipse cx="70" cy="70" rx="36" ry="27" fill="#e8d870" opacity="0.65" transform="rotate(20 70 70)"/>
+          <ellipse cx="70" cy="70" rx="36" ry="27" fill="#e8d870" opacity="0.65" transform="rotate(60 70 70)"/>
+          <ellipse cx="70" cy="70" rx="22" ry="16" fill="#d8c050" opacity="0.75" transform="rotate(10 70 70)"/>
+          <circle cx="70" cy="70" r="11" fill="#c8a838" opacity="0.85"/>
+          <circle cx="64" cy="66" r="3" fill="#e8a020" opacity="0.85"/>
+          <circle cx="76" cy="66" r="3" fill="#e8a020" opacity="0.85"/>
+          <circle cx="70" cy="62" r="3" fill="#e8a020" opacity="0.85"/>
+          <path d="M70 108 Q73 122 76 135" stroke="#8a9e8c" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="78" cy="123" rx="14" ry="5" fill="#7a926e" opacity="0.5" transform="rotate(20 78 123)"/>
+        </svg>
+      </div>
+      <div class="peony-label">Canary Brilliants</div>
+      <div class="peony-sub">Soft yellow</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="about">
+  <div class="about-photo">
+    <img src="photo5.jpg" alt="Mission Blooms peony arrangement">
+    <div class="about-photo-badge">
+      <img src="logo.jpg" alt="Mission Blooms">
+    </div>
+  </div>
+  <div class="about-text">
+    <p class="about-eyebrow">Who we are</p>
+    <h2 class="about-title">A boutique farm on<br><em>Michigan's most</em><br><em>beautiful peninsula.</em></h2>
+    <p class="about-body">Mission Blooms LLC is a boutique peony flower farm situated on Michigan's picturesque Old Mission Peninsula in Traverse City. We provide florists with the finest, top-quality peony blooms, ensuring each flower is vibrant and exceptional.</p>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="gallery.html" class="btn">See the Gallery</a>
+      <a href="contact.html" class="btn btn-green">Get in Touch</a>
+    </div>
+  </div>
+</div>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <p class="cta-band-text">Wholesale orders only.<br><em>Contact Ana to inquire.</em></p>
+  <div style="display:flex;gap:1rem;flex-wrap:wrap;flex-shrink:0;">
+    <a href="mailto:missionblooms@gmail.com" class="btn btn-cream">missionblooms@gmail.com</a>
+    <a href="sms:+16167063882" class="btn btn-cream">(616) 706-3882</a>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo"><img src="logo.jpg" alt="Mission Blooms"></a>
+  <ul class="footer-nav">
+    <li><a href="shop.html">Varieties</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Mission Blooms LLC · Traverse City, MI</p>
+</footer>
+
+</body>
+</html>

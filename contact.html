@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wholesale — Mission Blooms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #faf9f5; --cream-dark: #f2efe8;
+    --green: #4a9c3a; --green-dark: #2e6b22; --green-deep: #1a4212;
+    --green-light: #d6ecd0; --green-pale: #edf6eb;
+    --charcoal: #1e2418; --warm-gray: #6b7060;
+    --border: rgba(74,156,58,0.15);
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'Jost', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-sans); background: var(--cream); color: var(--charcoal); font-size: 16px; line-height: 1.7; font-weight: 300; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 3rem; background: rgba(250,249,245,0.96); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+  .nav-logo-img { height: 64px; width: auto; display: block; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm-gray); text-decoration: none; transition: color 0.25s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--green-dark); }
+  footer { padding: 2.5rem 3rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .footer-logo img { height: 52px; width: auto; }
+  .footer-copy { font-size: 0.75rem; color: var(--warm-gray); }
+  .footer-nav { display: flex; gap: 2rem; list-style: none; }
+  .footer-nav a { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray); text-decoration: none; }
+  .footer-nav a:hover { color: var(--green-dark); }
+
+  .contact-layout { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; padding-top: 88px; }
+
+  .contact-info {
+    padding: 5rem 3rem;
+    background: var(--green-deep); color: var(--cream);
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+
+  /* logo watermark */
+  .contact-info::after {
+    content: '';
+    position: absolute; bottom: -40px; right: -40px;
+    width: 280px; height: 280px;
+    background: url('logo.jpg') center/contain no-repeat;
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  .contact-eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: #7dd66a; margin-bottom: 1.5rem; }
+  .contact-title { font-family: var(--font-serif); font-size: clamp(2.2rem, 3.5vw, 4rem); font-weight: 300; line-height: 1.15; margin-bottom: 1.5rem; }
+  .contact-title em { font-style: italic; color: #7dd66a; }
+  .contact-desc { font-size: 0.95rem; color: rgba(250,249,245,0.65); line-height: 1.85; max-width: 400px; margin-bottom: 2.5rem; }
+
+  .info-blocks { display: flex; flex-direction: column; }
+  .info-block { padding: 1.25rem 0; border-top: 1px solid rgba(255,255,255,0.1); }
+  .info-block:last-child { border-bottom: 1px solid rgba(255,255,255,0.1); }
+  .info-label { font-size: 0.67rem; letter-spacing: 0.15em; text-transform: uppercase; color: #7dd66a; margin-bottom: 0.35rem; }
+  .info-value { font-family: var(--font-serif); font-size: 1.2rem; font-style: italic; color: var(--cream); }
+  .info-sub { font-size: 0.8rem; color: rgba(250,249,245,0.45); margin-top: 0.15rem; }
+
+  .contact-form-wrap { padding: 5rem 3rem; display: flex; flex-direction: column; justify-content: center; }
+  .form-title { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 300; font-style: italic; margin-bottom: 0.5rem; color: var(--charcoal); }
+  .form-sub { font-size: 0.85rem; color: var(--warm-gray); margin-bottom: 1.5rem; }
+
+  /* Direct contact tiles */
+  .contact-tiles { display: flex; gap: 1rem; margin-bottom: 2rem; }
+  .contact-tile {
+    flex: 1; display: flex; flex-direction: column; gap: 0.25rem;
+    padding: 1rem 1.25rem; border: 1px solid var(--border);
+    background: var(--green-pale); text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .contact-tile:hover { border-color: var(--green); background: var(--green-light); }
+  .tile-label { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm-gray); }
+  .tile-value { font-size: 0.9rem; color: var(--green-dark); font-weight: 400; }
+
+  .form-group { margin-bottom: 1.25rem; }
+  label { display: block; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 0.45rem; }
+  input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+    width: 100%; padding: 0.85rem 1rem; border: 1px solid var(--border);
+    background: white; color: var(--charcoal); font-family: var(--font-sans);
+    font-size: 0.9rem; font-weight: 300; appearance: none; -webkit-appearance: none;
+    border-radius: 0; outline: none; transition: border-color 0.2s;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--green); }
+  textarea { resize: vertical; min-height: 110px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .select-wrap { position: relative; }
+  .select-wrap::after { content: ''; position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); border: 4px solid transparent; border-top-color: var(--warm-gray); pointer-events: none; }
+  .submit-btn { display: block; width: 100%; padding: 1.1rem; background: var(--green); color: white; border: none; font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: background 0.3s; margin-top: 0.25rem; }
+  .submit-btn:hover { background: var(--green-dark); }
+  .form-note { font-size: 0.72rem; color: var(--warm-gray); margin-top: 0.75rem; line-height: 1.65; }
+  .thank-you { display: none; text-align: center; padding: 3rem 0; }
+  .thank-you-icon { width: 56px; height: 56px; background: var(--green-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
+  .thank-you-title { font-family: var(--font-serif); font-size: 2rem; font-style: italic; color: var(--charcoal); margin-bottom: 0.5rem; }
+  .thank-you-sub { color: var(--warm-gray); font-size: 0.9rem; }
+
+  .wholesale-strip { background: var(--green-light); padding: 4rem 3rem; display: grid; grid-template-columns: repeat(3,1fr); gap: 2rem; border-top: 1px solid rgba(74,156,58,0.2); }
+  .ws-item {}
+  .ws-icon { color: var(--green); font-size: 1.4rem; margin-bottom: 0.75rem; }
+  .ws-title { font-family: var(--font-serif); font-size: 1.1rem; font-style: italic; font-weight: 400; color: var(--green-deep); margin-bottom: 0.4rem; }
+  .ws-desc { font-size: 0.85rem; color: var(--warm-gray); line-height: 1.7; }
+
+  @media (max-width: 900px) {
+    nav { padding: 0.6rem 1.5rem; } .nav-logo-img { height: 50px; } .nav-links { gap: 1.5rem; }
+    .contact-layout { grid-template-columns: 1fr; }
+    .contact-info { padding: 5rem 1.5rem 3rem; }
+    .contact-form-wrap { padding: 3rem 1.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .contact-tiles { flex-direction: column; }
+    .wholesale-strip { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html"><img src="logo.jpg" alt="Mission Blooms" class="nav-logo-img"></a>
+  <ul class="nav-links">
+    <li><a href="shop.html">Varieties</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html" class="active">Wholesale</a></li>
+  </ul>
+</nav>
+
+<div class="contact-layout">
+  <div class="contact-info">
+    <p class="contact-eyebrow">Wholesale inquiries</p>
+    <h1 class="contact-title">Let's grow<br>something <em>together.</em></h1>
+    <p class="contact-desc">Mission Blooms LLC is a boutique peony farm on Michigan's picturesque Old Mission Peninsula. We provide florists with the finest, top-quality peony blooms — ensuring each flower is vibrant and exceptional.</p>
+    <div class="info-blocks">
+      <div class="info-block">
+        <div class="info-label">Contact</div>
+        <div class="info-value">Ana Ohlmann</div>
+        <div class="info-sub">Owner, Mission Blooms LLC</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Email</div>
+        <div class="info-value"><a href="mailto:missionblooms@gmail.com" style="color:var(--cream);text-decoration:none;">missionblooms@gmail.com</a></div>
+        <div class="info-sub">For orders and inquiries</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Text / Cell</div>
+        <div class="info-value"><a href="sms:+16167063882" style="color:var(--cream);text-decoration:none;">(616) 706-3882</a></div>
+        <div class="info-sub">Text preferred for peony orders</div>
+      </div>
+      <div class="info-block">
+        <div class="info-label">Location &amp; Season</div>
+        <div class="info-value">Old Mission Peninsula</div>
+        <div class="info-sub">Traverse City, MI · Late May — Mid July</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-form-wrap">
+    <div id="form-container">
+      <h2 class="form-title">Get in touch</h2>
+      <p class="form-sub">Contact Ana directly — or fill out this form and she'll be in touch promptly.</p>
+
+      <div class="contact-tiles">
+        <a href="mailto:missionblooms@gmail.com" class="contact-tile">
+          <span class="tile-label">Email Ana</span>
+          <span class="tile-value">missionblooms@gmail.com</span>
+        </a>
+        <a href="sms:+16167063882" class="contact-tile">
+          <span class="tile-label">Text / Cell</span>
+          <span class="tile-value">(616) 706-3882</span>
+        </a>
+      </div>
+
+      <form id="inquiry-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your name</label>
+            <input type="text" id="name" placeholder="Full name" required>
+          </div>
+          <div class="form-group">
+            <label for="business">Business name</label>
+            <input type="text" id="business" placeholder="Studio / shop name" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone (optional)</label>
+            <input type="tel" id="phone" placeholder="(231) 555-0100">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="buyer-type">I am a...</label>
+          <div class="select-wrap">
+            <select id="buyer-type" required>
+              <option value="" disabled selected>Select your role</option>
+              <option>Florist / Flower shop</option>
+              <option>Wedding / Event designer</option>
+              <option>Wholesale distributor</option>
+              <option>Restaurant / Hospitality</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="varieties">Varieties of interest</label>
+            <div class="select-wrap">
+              <select id="varieties">
+                <option value="" disabled selected>Primary interest</option>
+                <option>All varieties</option>
+                <option>Monsieur Jules Elie</option>
+                <option>Duchesse de Nemours</option>
+                <option>Sarah Bernhardt</option>
+                <option>Shirley Temple</option>
+                <option>Lady Alexandra Duff</option>
+                <option>Canary Brilliants</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="volume">Estimated volume</label>
+            <div class="select-wrap">
+              <select id="volume">
+                <option value="" disabled selected>Approximate quantity</option>
+                <option>Under 100 stems/week</option>
+                <option>100–500 stems/week</option>
+                <option>500–2,000 stems/week</option>
+                <option>2,000+ stems/week</option>
+                <option>Event / one-time order</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">Tell us more</label>
+          <textarea id="message" placeholder="Tell us about your business, how you use peonies, and what you're looking for from a grower relationship..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send wholesale inquiry →</button>
+        <p class="form-note">Connect this form to Formspree or Netlify Forms so inquiries reach Ana's inbox. Your information is never shared with third parties.</p>
+      </form>
+    </div>
+
+    <div class="thank-you" id="thank-you">
+      <div class="thank-you-icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9c3a" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2 class="thank-you-title">Thank you for reaching out.</h2>
+      <p class="thank-you-sub">Ana will review your inquiry and be in touch shortly. We look forward to connecting.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wholesale-strip">
+  <div class="ws-item">
+    <div class="ws-icon">✦</div>
+    <div class="ws-title">Grower-direct pricing</div>
+    <div class="ws-desc">No middlemen. Buy direct from the farm and build a lasting relationship with your grower.</div>
+  </div>
+  <div class="ws-item">
+    <div class="ws-icon">✦</div>
+    <div class="ws-title">Peak-quality harvest</div>
+    <div class="ws-desc">Stems cut at optimal bud stage for maximum vase life. Handled with care from field to cooler.</div>
+  </div>
+  <div class="ws-item">
+    <div class="ws-icon">✦</div>
+    <div class="ws-title">Seasonal planning support</div>
+    <div class="ws-desc">We'll work with you to plan availability around your events throughout the Michigan peony season.</div>
+  </div>
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo"><img src="logo.jpg" alt="Mission Blooms"></a>
+  <ul class="footer-nav">
+    <li><a href="shop.html">Varieties</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Mission Blooms LLC · Traverse City, MI</p>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('form-container').style.display = 'none';
+  document.getElementById('thank-you').style.display = 'block';
+}
+</script>
+</body>
+</html>

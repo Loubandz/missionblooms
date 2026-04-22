@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Varieties — Mission Blooms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #faf9f5; --cream-dark: #f2efe8;
+    --green: #4a9c3a; --green-dark: #2e6b22; --green-deep: #1a4212;
+    --green-light: #d6ecd0; --green-pale: #edf6eb;
+    --charcoal: #1e2418; --warm-gray: #6b7060;
+    --border: rgba(74,156,58,0.15);
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'Jost', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-sans); background: var(--cream); color: var(--charcoal); font-size: 16px; line-height: 1.7; font-weight: 300; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.6rem 3rem; background: rgba(250,249,245,0.96); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+  .nav-logo-img { height: 64px; width: auto; display: block; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm-gray); text-decoration: none; transition: color 0.25s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--green-dark); }
+  .btn { display: inline-block; font-family: var(--font-sans); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; padding: 1rem 2.5rem; border: 1px solid var(--green-dark); color: var(--green-dark); transition: all 0.3s; }
+  .btn:hover { background: var(--green-dark); color: var(--cream); }
+  .btn-green { background: var(--green); border-color: var(--green); color: white; }
+  .btn-green:hover { background: var(--green-dark); border-color: var(--green-dark); }
+  footer { padding: 2.5rem 3rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .footer-logo img { height: 52px; width: auto; }
+  .footer-copy { font-size: 0.75rem; color: var(--warm-gray); }
+  .footer-nav { display: flex; gap: 2rem; list-style: none; }
+  .footer-nav a { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray); text-decoration: none; }
+  .footer-nav a:hover { color: var(--green-dark); }
+
+  .page-header { padding: 8rem 3rem 4rem; border-bottom: 1px solid var(--border); background: var(--green-pale); }
+  .page-eyebrow { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 1rem; }
+  .page-title { font-family: var(--font-serif); font-size: clamp(2.5rem, 4vw, 4.5rem); font-weight: 300; line-height: 1.1; }
+  .page-title em { font-style: italic; color: var(--green); }
+  .page-subtitle { font-size: 1rem; color: var(--warm-gray); max-width: 520px; margin-top: 1rem; }
+
+  .varieties-list { padding: 0 3rem 6rem; }
+  .variety-entry { display: grid; grid-template-columns: 1fr 1.6fr; border-bottom: 1px solid var(--border); min-height: 420px; }
+  .variety-entry:nth-child(even) { direction: rtl; }
+  .variety-entry:nth-child(even) > * { direction: ltr; }
+  .variety-visual { display: flex; align-items: center; justify-content: center; padding: 3rem; }
+  .variety-visual svg { width: 220px; height: 220px; }
+  .variety-content { padding: 4rem 3rem; display: flex; flex-direction: column; justify-content: center; border-left: 1px solid var(--border); }
+  .variety-entry:nth-child(even) .variety-content { border-left: none; border-right: 1px solid var(--border); }
+  .variety-number { font-family: var(--font-serif); font-size: 5rem; font-weight: 300; color: rgba(74,156,58,0.12); line-height: 1; margin-bottom: -1.5rem; display: block; }
+  .variety-title { font-family: var(--font-serif); font-size: 2.2rem; font-style: italic; font-weight: 400; color: var(--charcoal); margin-bottom: 0.5rem; line-height: 1.2; }
+  .variety-color-tag { display: inline-block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green-dark); margin-bottom: 1.25rem; }
+  .variety-desc { font-size: 0.95rem; color: var(--warm-gray); line-height: 1.8; max-width: 420px; }
+  .variety-attrs { display: flex; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .attr { display: flex; flex-direction: column; gap: 0.2rem; }
+  .attr-label { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm-gray); }
+  .attr-value { font-size: 0.88rem; font-weight: 400; color: var(--charcoal); }
+  .wholesale-note { background: var(--green-deep); color: var(--cream); padding: 4rem 3rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+  .wholesale-note-text { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 300; font-style: italic; }
+  @media (max-width: 900px) {
+    nav { padding: 0.6rem 1.5rem; } .nav-logo-img { height: 50px; } .nav-links { gap: 1.5rem; }
+    .page-header { padding: 6rem 1.5rem 3rem; } .varieties-list { padding: 0 1.5rem 4rem; }
+    .variety-entry, .variety-entry:nth-child(even) { grid-template-columns: 1fr; direction: ltr; }
+    .variety-content { border-left: none !important; border-right: none !important; border-top: 1px solid var(--border); padding: 2rem 1.5rem; }
+    .variety-visual { padding: 2rem; }
+    .wholesale-note { flex-direction: column; padding: 3rem 1.5rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html"><img src="logo.jpg" alt="Mission Blooms" class="nav-logo-img"></a>
+  <ul class="nav-links">
+    <li><a href="shop.html" class="active">Varieties</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html">Wholesale</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="page-eyebrow">Our offerings</p>
+  <h1 class="page-title">Six <em>exceptional</em><br>peony varieties</h1>
+  <p class="page-subtitle">Each variety is selected for superior bloom quality, vase life, and beauty that makes arrangements unforgettable. Available wholesale during peak Michigan season.</p>
+</div>
+
+<div class="varieties-list">
+
+  <div class="variety-entry" id="jules-elie">
+    <div class="variety-visual" style="background:#fdf4f4;">
+      <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#e8a0a0" opacity="0.35" transform="rotate(0 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#e8a0a0" opacity="0.35" transform="rotate(36 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#e8a0a0" opacity="0.35" transform="rotate(72 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#e8a0a0" opacity="0.35" transform="rotate(108 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#e8a0a0" opacity="0.35" transform="rotate(144 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#de8585" opacity="0.45" transform="rotate(18 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#de8585" opacity="0.45" transform="rotate(54 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#de8585" opacity="0.45" transform="rotate(90 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#de8585" opacity="0.45" transform="rotate(126 110 110)"/>
+        <ellipse cx="110" cy="110" rx="35" ry="26" fill="#c86060" opacity="0.6" transform="rotate(10 110 110)"/>
+        <ellipse cx="110" cy="110" rx="35" ry="26" fill="#c86060" opacity="0.6" transform="rotate(55 110 110)"/>
+        <ellipse cx="110" cy="110" rx="35" ry="26" fill="#c86060" opacity="0.6" transform="rotate(100 110 110)"/>
+        <circle cx="110" cy="110" r="20" fill="#a84040" opacity="0.7"/>
+        <circle cx="110" cy="110" r="10" fill="#882020" opacity="0.8"/>
+      </svg>
+    </div>
+    <div class="variety-content">
+      <span class="variety-number">01</span>
+      <h2 class="variety-title">Monsieur Jules Elie</h2>
+      <span class="variety-color-tag">Deep rose pink</span>
+      <p class="variety-desc">One of the most beloved peonies of all time — a full, globular double bloom in rich rose-pink with a classic, heady fragrance. Exceptionally large heads make it a showstopper in any arrangement. A perennial bestseller among florists and designers alike.</p>
+      <div class="variety-attrs">
+        <div class="attr"><span class="attr-label">Bloom type</span><span class="attr-value">Double</span></div>
+        <div class="attr"><span class="attr-label">Color</span><span class="attr-value">Deep rose pink</span></div>
+        <div class="attr"><span class="attr-label">Fragrance</span><span class="attr-value">Strong, sweet</span></div>
+        <div class="attr"><span class="attr-label">Vase life</span><span class="attr-value">7–10 days</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="variety-entry" id="duchesse">
+    <div class="variety-visual" style="background:#faf7f0;">
+      <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#f5edda" opacity="0.6" transform="rotate(0 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#f0e5cc" opacity="0.6" transform="rotate(36 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#f5edda" opacity="0.6" transform="rotate(72 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#ede0c0" opacity="0.6" transform="rotate(108 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#f5edda" opacity="0.6" transform="rotate(144 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#e8d8b0" opacity="0.7" transform="rotate(18 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#e8d8b0" opacity="0.7" transform="rotate(54 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#e8d8b0" opacity="0.7" transform="rotate(90 110 110)"/>
+        <ellipse cx="110" cy="110" rx="35" ry="26" fill="#d4c090" opacity="0.8" transform="rotate(30 110 110)"/>
+        <ellipse cx="110" cy="110" rx="35" ry="26" fill="#d4c090" opacity="0.8" transform="rotate(70 110 110)"/>
+        <circle cx="110" cy="110" r="20" fill="#c4a870" opacity="0.85"/>
+        <circle cx="110" cy="110" r="10" fill="#a88850" opacity="0.9"/>
+      </svg>
+    </div>
+    <div class="variety-content">
+      <span class="variety-number">02</span>
+      <h2 class="variety-title">Duchesse de Nemours</h2>
+      <span class="variety-color-tag">Creamy white · Ivory center</span>
+      <p class="variety-desc">A timeless white peony with a delicate butter-yellow center that fades to pure snow white at the edges. Prized for its refined elegance, intoxicating fragrance, and clean look that pairs beautifully with any palette. A wedding and event designer's staple.</p>
+      <div class="variety-attrs">
+        <div class="attr"><span class="attr-label">Bloom type</span><span class="attr-value">Double</span></div>
+        <div class="attr"><span class="attr-label">Color</span><span class="attr-value">Creamy white</span></div>
+        <div class="attr"><span class="attr-label">Fragrance</span><span class="attr-value">Moderate, pleasant</span></div>
+        <div class="attr"><span class="attr-label">Vase life</span><span class="attr-value">7–10 days</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="variety-entry" id="sarah-bernhardt">
+    <div class="variety-visual" style="background:#fdf0f5;">
+      <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#edbdd0" opacity="0.4" transform="rotate(0 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#edbdd0" opacity="0.4" transform="rotate(36 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#e8b0c8" opacity="0.4" transform="rotate(72 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#edbdd0" opacity="0.4" transform="rotate(108 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#e8b0c8" opacity="0.4" transform="rotate(144 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#d898b8" opacity="0.52" transform="rotate(18 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#d898b8" opacity="0.52" transform="rotate(54 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#d898b8" opacity="0.52" transform="rotate(90 110 110)"/>
+        <ellipse cx="110" cy="110" rx="35" ry="26" fill="#c07898" opacity="0.65" transform="rotate(15 110 110)"/>
+        <ellipse cx="110" cy="110" rx="35" ry="26" fill="#c07898" opacity="0.65" transform="rotate(60 110 110)"/>
+        <circle cx="110" cy="110" r="20" fill="#a85878" opacity="0.78"/>
+        <circle cx="110" cy="110" r="10" fill="#883858" opacity="0.88"/>
+      </svg>
+    </div>
+    <div class="variety-content">
+      <span class="variety-number">03</span>
+      <h2 class="variety-title">Sarah Bernhardt</h2>
+      <span class="variety-color-tag">Apple blossom pink</span>
+      <p class="variety-desc">Perhaps the world's most famous peony. Large, perfectly formed double blooms in a soft, romantic apple-blossom pink — silver-tipped petals giving the flower its characteristic shimmer. Exceptional fragrance. One of the most requested varieties by name.</p>
+      <div class="variety-attrs">
+        <div class="attr"><span class="attr-label">Bloom type</span><span class="attr-value">Double</span></div>
+        <div class="attr"><span class="attr-label">Color</span><span class="attr-value">Soft pink</span></div>
+        <div class="attr"><span class="attr-label">Fragrance</span><span class="attr-value">Strong, rose-like</span></div>
+        <div class="attr"><span class="attr-label">Vase life</span><span class="attr-value">8–10 days</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="variety-entry" id="shirley-temple">
+    <div class="variety-visual" style="background:#faf8f2;">
+      <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#f2e8d0" opacity="0.58" transform="rotate(0 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#f0e4c8" opacity="0.58" transform="rotate(36 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#f2e8d0" opacity="0.58" transform="rotate(72 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#ede0c0" opacity="0.58" transform="rotate(108 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#f2e8d0" opacity="0.58" transform="rotate(144 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#e8d8a8" opacity="0.68" transform="rotate(18 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#e8d8a8" opacity="0.68" transform="rotate(54 110 110)"/>
+        <ellipse cx="110" cy="110" rx="35" ry="26" fill="#d8c888" opacity="0.78" transform="rotate(20 110 110)"/>
+        <ellipse cx="110" cy="110" rx="35" ry="26" fill="#d8c888" opacity="0.78" transform="rotate(70 110 110)"/>
+        <circle cx="110" cy="110" r="20" fill="#c8b070" opacity="0.82"/>
+        <circle cx="110" cy="110" r="10" fill="#a89050" opacity="0.9"/>
+      </svg>
+    </div>
+    <div class="variety-content">
+      <span class="variety-number">04</span>
+      <h2 class="variety-title">Shirley Temple</h2>
+      <span class="variety-color-tag">Soft blush to ivory</span>
+      <p class="variety-desc">Opening a soft blush pink and maturing to a gentle ivory-white, Shirley Temple is beloved for its graceful color journey. Large, ruffled double blooms with a mild, pleasant fragrance. A sophisticated choice for garden-style and airy bridal arrangements.</p>
+      <div class="variety-attrs">
+        <div class="attr"><span class="attr-label">Bloom type</span><span class="attr-value">Double</span></div>
+        <div class="attr"><span class="attr-label">Color</span><span class="attr-value">Blush to ivory</span></div>
+        <div class="attr"><span class="attr-label">Fragrance</span><span class="attr-value">Light, delicate</span></div>
+        <div class="attr"><span class="attr-label">Vase life</span><span class="attr-value">7–9 days</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="variety-entry" id="lady-alexandra">
+    <div class="variety-visual" style="background:#fdf2f6;">
+      <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#f2c8d8" opacity="0.42" transform="rotate(0 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#eebbd0" opacity="0.42" transform="rotate(36 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#f2c8d8" opacity="0.42" transform="rotate(72 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#eebbd0" opacity="0.42" transform="rotate(108 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#f2c8d8" opacity="0.42" transform="rotate(144 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#e8a8c0" opacity="0.55" transform="rotate(18 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#e8a8c0" opacity="0.55" transform="rotate(54 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#e0a0b8" opacity="0.55" transform="rotate(90 110 110)"/>
+        <ellipse cx="110" cy="110" rx="35" ry="26" fill="#d088a0" opacity="0.68" transform="rotate(15 110 110)"/>
+        <ellipse cx="110" cy="110" rx="35" ry="26" fill="#d088a0" opacity="0.68" transform="rotate(55 110 110)"/>
+        <circle cx="110" cy="110" r="20" fill="#b87090" opacity="0.78"/>
+        <circle cx="110" cy="110" r="10" fill="#985068" opacity="0.88"/>
+      </svg>
+    </div>
+    <div class="variety-content">
+      <span class="variety-number">05</span>
+      <h2 class="variety-title">Lady Alexandra Duff</h2>
+      <span class="variety-color-tag">Pale blush pink</span>
+      <p class="variety-desc">An old-fashioned English rose of a peony — cup-shaped outer guard petals surrounding a tightly packed center in the softest blush. One of the most delicately beautiful peonies available. Highly sought after for luxury and high-end bridal work.</p>
+      <div class="variety-attrs">
+        <div class="attr"><span class="attr-label">Bloom type</span><span class="attr-value">Semi-double / Double</span></div>
+        <div class="attr"><span class="attr-label">Color</span><span class="attr-value">Pale blush pink</span></div>
+        <div class="attr"><span class="attr-label">Fragrance</span><span class="attr-value">Moderate, sweet</span></div>
+        <div class="attr"><span class="attr-label">Vase life</span><span class="attr-value">6–9 days</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="variety-entry" id="canary-brilliants">
+    <div class="variety-visual" style="background:#fdfbf0;">
+      <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#f5f0c0" opacity="0.55" transform="rotate(0 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#f0e8a0" opacity="0.55" transform="rotate(36 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#f5f0c0" opacity="0.55" transform="rotate(72 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#ede080" opacity="0.55" transform="rotate(108 110 110)"/>
+        <ellipse cx="110" cy="110" rx="78" ry="58" fill="#f5f0c0" opacity="0.55" transform="rotate(144 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#e8d870" opacity="0.65" transform="rotate(18 110 110)"/>
+        <ellipse cx="110" cy="110" rx="55" ry="40" fill="#e8d870" opacity="0.65" transform="rotate(54 110 110)"/>
+        <ellipse cx="110" cy="110" rx="35" ry="26" fill="#d8c050" opacity="0.75" transform="rotate(20 110 110)"/>
+        <ellipse cx="110" cy="110" rx="35" ry="26" fill="#d8c050" opacity="0.75" transform="rotate(60 110 110)"/>
+        <circle cx="110" cy="110" r="20" fill="#c8a838" opacity="0.82"/>
+        <circle cx="110" cy="110" r="10" fill="#a88020" opacity="0.9"/>
+      </svg>
+    </div>
+    <div class="variety-content">
+      <span class="variety-number">06</span>
+      <h2 class="variety-title">Canary Brilliants</h2>
+      <span class="variety-color-tag">Soft yellow · Coral blush</span>
+      <p class="variety-desc">Among the rarest and most coveted peony colors — Canary Brilliants opens in a soft, warm peach-yellow that glows in arrangements. A Japanese-type bloom with distinctive silky petals surrounding a dramatic center. Available in limited quantities each season.</p>
+      <div class="variety-attrs">
+        <div class="attr"><span class="attr-label">Bloom type</span><span class="attr-value">Japanese / Anemone</span></div>
+        <div class="attr"><span class="attr-label">Color</span><span class="attr-value">Peach yellow</span></div>
+        <div class="attr"><span class="attr-label">Fragrance</span><span class="attr-value">Light</span></div>
+        <div class="attr"><span class="attr-label">Vase life</span><span class="attr-value">6–8 days</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="wholesale-note">
+  <p class="wholesale-note-text">All varieties available for wholesale orders only.<br>Inquire about seasonal availability.</p>
+  <a href="contact.html" class="btn btn-green">Contact for pricing</a>
+</div>
+
+<footer>
+  <a href="index.html" class="footer-logo"><img src="logo.jpg" alt="Mission Blooms"></a>
+  <ul class="footer-nav">
+    <li><a href="shop.html">Varieties</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 Mission Blooms LLC · Traverse City, MI</p>
+</footer>
+</body>
+</html>
